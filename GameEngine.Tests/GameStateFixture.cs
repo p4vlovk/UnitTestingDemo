@@ -9,7 +9,7 @@
             this.State = new GameState();
         }
 
-        public GameState State { get; private set; }
+        public GameState State { get; }
 
         public void Dispose()
         {
