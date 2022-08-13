@@ -18,16 +18,15 @@
         {
             this.output = output;
             this.output.WriteLine("Creating new PlayerCharacter");
-            this.sut = new PlayerCharacter
-            {
-                FirstName = "Sarah",
-                LastName = "Smith"
-            };
+            this.sut = new PlayerCharacter("Sarah", "Smith");
         }
 
+        #region Assert against boolean values
         [Fact]
         public void BeInexperiencedWhenNew() => Assert.True(this.sut.IsNoob);
+        #endregion
 
+        #region Assert against string values
         [Fact]
         public void CalculateFullName() => Assert.Equal("Sarah Smith", this.sut.FullName);
 
@@ -38,21 +37,17 @@
         public void HaveFullNameEndingWithLastName() => Assert.EndsWith("Smith", this.sut.FullName);
 
         [Fact]
-        public void CalculateFullName_IgnoreCaseAssertExample()
-        {
-            this.sut.FirstName = "SARAH";
-            this.sut.LastName = "SMITH";
+        public void CalculateFullName_IgnoreCaseAssertExample() => Assert.Equal("Sarah Smith", new PlayerCharacter("SARAH", "SMITH").FullName, ignoreCase: true);
 
-            Assert.Equal("Sarah Smith", this.sut.FullName, ignoreCase: true);
-        }
-
-        //[Fact(Skip = "Don't need to run this")]
+        // [Fact(Skip = "Don't need to run this")]
         [Fact]
         public void CalculateFullName_SubstringAssertExample() => Assert.Contains("ah Sm", this.sut.FullName);
 
         [Fact]
         public void CalculateFullNameWithTitleCase() => Assert.Matches("[A-Z]{1}[a-z]+ [A-Z]{1}[a-z]+", this.sut.FullName);
+        #endregion
 
+        #region Assert against numeric values
         [Fact]
         public void StartWithDefaultHealth() => Assert.Equal(100, this.sut.Health);
 
@@ -64,13 +59,17 @@
         {
             this.sut.Sleep(); // Expect increase between 1 to 100 inclusive
 
-            //Assert.True(this.sut.Health >= 101 && this.sut.Health <= 200);
+            // Assert.True(this.sut.Health is >= 101 and <= 200); // This assert also works but if it fails, the error message doesn't give the specific reason.
             Assert.InRange(this.sut.Health, 101, 200);
         }
+        #endregion
 
+        #region Assert against null
         [Fact]
         public void NotHaveNicknameByDefault() => Assert.Null(this.sut.Nickname);
+        #endregion
 
+        #region Assert against collections
         [Fact]
         public void HaveALongBow() => Assert.Contains("Long Bow", this.sut.Weapons);
 
@@ -95,6 +94,7 @@
 
         [Fact]
         public void HaveNoEmptyDefaultWeapons() => Assert.All(this.sut.Weapons, weapon => Assert.False(string.IsNullOrWhiteSpace(weapon)));
+        #endregion
 
         [Fact]
         public void RaiseSleptEvent() => Assert.Raises<EventArgs>(
@@ -107,12 +107,12 @@
 
         [Theory]
         [HealthDamageData]
-        //[MemberData(nameof(ExternalHealthDamageTestData.TestData), MemberType = typeof(ExternalHealthDamageTestData))]
-        //[MemberData(nameof(InternalHealthDamageTestData.TestData), MemberType = typeof(InternalHealthDamageTestData))]
-        //[InlineData(0, 100)]
-        //[InlineData(1, 99)]
-        //[InlineData(50, 50)]
-        //[InlineData(101, 1)]
+        // [MemberData(nameof(ExternalHealthDamageTestData.TestData), MemberType = typeof(ExternalHealthDamageTestData))]
+        // [MemberData(nameof(InternalHealthDamageTestData.TestData), MemberType = typeof(InternalHealthDamageTestData))]
+        // [InlineData(0, 100)]
+        // [InlineData(1, 99)]
+        // [InlineData(50, 50)]
+        // [InlineData(101, 1)]
         public void TakeDamage(int damage, int expectedHealth)
         {
             this.sut.TakeDamage(damage);

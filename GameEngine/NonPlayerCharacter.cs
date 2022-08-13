@@ -4,13 +4,18 @@
 
     public class NonPlayerCharacter
     {
-        public string FirstName { get; set; }
+        private readonly string firstName;
+        private readonly string lastName;
 
-        public string LastName { get; set; }
+        public NonPlayerCharacter(string firstName, string lastName)
+        {
+            this.firstName = firstName;
+            this.lastName = lastName;
+        }
+        
+        public string FullName => $"{this.firstName} {this.lastName}";
 
-        public string FullName => $"{this.FirstName} {this.LastName}";
-
-        public int Health { get; set; } = 100;
+        public int Health { get; private set; } = 100;
 
         public void TakeDamage(int damage) => this.Health = Math.Max(1, this.Health -= damage);
     }

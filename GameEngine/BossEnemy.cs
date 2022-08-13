@@ -1,6 +1,6 @@
 ﻿namespace GameEngine
 {
-    public class BossEnemy : Enemy
+    public sealed class BossEnemy : Enemy
     {
         public override double TotalSpecialPower => 1000;
 
