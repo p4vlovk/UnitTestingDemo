@@ -10,7 +10,7 @@
     ///     - Slow. The call takes a long time to complete and will slow down unit tests
     ///     - No test version. The external company does not provide a test version,
     ///       only a live "real" data production version
-    ///     - Unreliable. The external service fails often, making out tests to fail
+    ///     - Unreliable. The external service fails often, making our tests fail
     ///     - Effort. The effort (and/or complexity) to use the real service
     ///       makes tests painful to write
     /// </summary>

@@ -2,10 +2,8 @@
 {
     using System;
     using System.Collections.Generic;
-
     using Moq;
     using Moq.Protected;
-
     using Xunit;
 
     public class CreditCardApplicationEvaluatorShould
@@ -30,7 +28,7 @@
             var application = new CreditCardApplication { GrossAnnualIncome = 100_000 };
 
             // Act
-            var decision = sut.Evaluate(application);
+            var decision = this.sut.Evaluate(application);
 
             // Assert
             Assert.Equal(CreditCardApplicationDecision.AutoAccepted, decision);
@@ -237,7 +235,8 @@
         {
             // Arrange
             var mockFraudLookup = new Mock<FraudLookup>();
-            mockFraudLookup.Protected()
+            mockFraudLookup
+                .Protected()
                 .Setup<bool>("CheckApplication", ItExpr.IsAny<CreditCardApplication>())
                 .Returns(true);
 
@@ -255,8 +254,9 @@
         public void LinqToMocks()
         {
             // Arrange
-            this.sut = new CreditCardApplicationEvaluator(Mock.Of<IFrequentFlyerNumberValidator>(validator =>
-                validator.ServiceInformation.License.LicenseKey == "OK" && validator.IsValid(It.IsAny<string>())));
+            this.sut = new CreditCardApplicationEvaluator(Mock.Of<IFrequentFlyerNumberValidator>(
+                validator => validator.ServiceInformation.License.LicenseKey == "OK" &&
+                             validator.IsValid(It.IsAny<string>())));
 
             var application = new CreditCardApplication { Age = 25 };
 
