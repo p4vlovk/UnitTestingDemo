@@ -4,26 +4,30 @@
 
     public class AirportCode
     {
-        private readonly string code;
+        private readonly string value;
 
-        public AirportCode(string code)
+        public AirportCode(string value)
         {
-            if (code is null)
+            if (value is null)
             {
-                throw new ArgumentNullException(nameof(code));
+                throw new ArgumentNullException(nameof(value));
             }
 
-            if (!this.IsValid(code))
+            if (!IsValid(value))
             {
-                throw new ArgumentException("Airport code should be three uppercase letters.", nameof(code));
+                throw new FormatException($"Airport code {nameof(value)} is not in the correct format. Airport codes should be three uppercase letters.");
             }
 
-            this.code = code;
+            this.value = value;
         }
 
-        public override string ToString() => this.code;
+        public override string ToString() => this.value;
 
-        private bool IsValid(string airportCode)
+        public static implicit operator string(AirportCode code) => code.value;
+
+        public static explicit operator AirportCode(string value) => new(value);
+
+        private static bool IsValid(string airportCode)
         {
             var isCorrectLength = airportCode.Length == 3;
             var isUpperCase = airportCode == airportCode.ToUpperInvariant();

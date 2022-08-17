@@ -13,13 +13,13 @@
 
         public Guid Id { get; set; }
 
-        public string ToAddress { get; set; }
+        public string ToAddress { get; }
 
         public string Subject { get; set; }
 
-        public string MessageBody { get; set; }
+        public string MessageBody { get; }
 
-        public bool IsImportant { get; set; }
+        public bool IsImportant { get; }
 
         public EmailMessageType MessageType { get; set; }
     }

@@ -6,7 +6,7 @@
 
     public class EmailMessageBuffer
     {
-        private readonly List<EmailMessage> emails = new List<EmailMessage>();
+        private readonly List<EmailMessage> emails = new();
 
         public EmailMessageBuffer(IEmailGateway emailGateway)
         {
@@ -42,7 +42,7 @@
         private void Send(EmailMessage email)
         {
             // Simulate sending email
-            //Debug.WriteLine($"Sending email to: {email.ToAddress}");
+            // Debug.WriteLine($"Sending email to: {email.ToAddress}");
 
             this.EmailGateway.Send(email);
         }

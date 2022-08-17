@@ -5,15 +5,15 @@
 
     public class FlightDetails
     {
-        private string arrivalAirportCode;
-        private string departureAirportCode;
+        private readonly string arrivalAirportCode;
+        private readonly string departureAirportCode;
 
         public string DepartureAirportCode
         {
             get => this.departureAirportCode;
-            set
+            init
             {
-                this.EnsureValidAirportCode(value);
+                EnsureValidAirportCode(value);
                 this.departureAirportCode = value;
             }
         }
@@ -21,20 +21,20 @@
         public string ArrivalAirportCode
         {
             get => this.arrivalAirportCode;
-            set
+            init
             {
-                this.EnsureValidAirportCode(value);
+                EnsureValidAirportCode(value);
                 this.arrivalAirportCode = value;
             }
         }
 
         public TimeSpan FlightDuration { get; set; }
 
-        public string AirlineName { get; set; }
+        public string AirlineName { get; init; }
 
-        public List<string> MealOptions { get; set; } = new List<string>();
+        public List<string> MealOptions { get; set; } = new();
 
-        private void EnsureValidAirportCode(string airportCode)
+        private static void EnsureValidAirportCode(string airportCode)
         {
             var isWrongLength = airportCode.Length != 3;
             var isWrongCase = airportCode != airportCode.ToUpperInvariant();

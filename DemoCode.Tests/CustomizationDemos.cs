@@ -29,5 +29,16 @@
 
             // etc.
         }
+        
+        [Fact]
+        public void CustomizedPipeline2()
+        {
+            var fixture = new Fixture();
+            fixture.Customizations.Add(new AirportCodeStringPropertyGenerator2());
+            var flight = fixture.Create<FlightDetails2>();
+            var airport = fixture.Create<Airport2>();
+
+            // etc.
+        }
     }
 }

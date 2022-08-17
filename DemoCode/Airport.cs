@@ -4,21 +4,21 @@
 
     public class Airport
     {
-        private string _airportCode;
+        private string code;
 
         public string AirportCode
         {
-            get => this._airportCode;
+            get => this.code;
             set
             {
-                this.EnsureValidAirportCode(value);
-                this._airportCode = value;
+                EnsureValidAirportCode(value);
+                this.code = value;
             }
         }
 
         public string AirportName { get; set; }
 
-        private void EnsureValidAirportCode(string airportCode)
+        private static void EnsureValidAirportCode(string airportCode)
         {
             var isWrongLength = airportCode.Length != 3;
             var isWrongCase = airportCode != airportCode.ToUpperInvariant();
@@ -27,5 +27,12 @@
                 throw new Exception($"{airportCode} is an invalid airport.");
             }
         }
+    }
+
+    public class Airport2
+    {
+        public AirportCode AirportCode { get; set; }
+        
+        public string AirportName { get; set; }
     }
 }

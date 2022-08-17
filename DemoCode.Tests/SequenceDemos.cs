@@ -1,5 +1,6 @@
 ﻿namespace DemoCode.Tests
 {
+    using System;
     using AutoFixture;
     using Xunit;
 
@@ -40,8 +41,10 @@
         {
             var fixture = new Fixture();
             var sut = new DebugMessageBuffer();
-            fixture.AddManyTo(sut.Messages, () => "hi");
-
+            // fixture.AddManyTo(sut.Messages, () => "hi");
+            var random = new Random();
+            fixture.AddManyTo(sut.Messages, () => random.Next().ToString());
+            
             // etc.
         }
     }

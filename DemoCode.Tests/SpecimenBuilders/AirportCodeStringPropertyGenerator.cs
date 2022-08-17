@@ -12,7 +12,7 @@
         public object Create(object request, ISpecimenContext context)
         {
             // See if we are trying to create a value for a property
-            if (!(request is PropertyInfo propertyInfo))
+            if (request is not PropertyInfo propertyInfo)
             {
                 // This specimen does not apply to current request
                 return new NoSpecimen(); // null is a valid specimen so return NoSpecimen
@@ -24,20 +24,30 @@
             var isStringProperty = propertyInfo.PropertyType == typeof(string);
             if (isAirportCodeProperty && isStringProperty)
             {
-                return this.RandomAirportCode();
+                return RandomAirportCode();
             }
 
             return new NoSpecimen();
         }
 
-        private string RandomAirportCode()
-        {
-            if (DateTime.Now.Ticks % 2 == 0)
-            {
-                return "LHR";
-            }
+        private static string RandomAirportCode()
+            => DateTime.Now.Ticks % 2 == 0 ? "LHR" : "PER";
+    }
 
-            return "PER";
-        }
+    public class AirportCodeStringPropertyGenerator2 : ISpecimenBuilder
+    {
+        public object Create(object request, ISpecimenContext context) => request switch
+        {
+            ParameterInfo parameterInfo => parameterInfo.ParameterType == typeof(AirportCode)
+                ? RandomAirportCode()
+                : new NoSpecimen(),
+            PropertyInfo propertyInfo => propertyInfo.PropertyType == typeof(AirportCode)
+                ? RandomAirportCode()
+                : new NoSpecimen(),
+            _ => new NoSpecimen()
+        };
+
+        private static AirportCode RandomAirportCode()
+            => DateTime.Now.Ticks % 2 == 0 ? (AirportCode)"LHR" : (AirportCode)"PER";
     }
 }
