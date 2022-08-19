@@ -1,8 +1,7 @@
-﻿namespace CreditCardApplications
+﻿namespace CreditCardApplications;
+
+public enum ValidationMode
 {
-    public enum ValidationMode
-    {
-        Quick,
-        Detailed
-    }
+    Quick,
+    Detailed
 }

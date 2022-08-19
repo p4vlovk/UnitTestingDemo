@@ -1,73 +1,72 @@
-﻿namespace UnitTestingDemo.Api.Controllers
+﻿namespace UnitTestingDemo.Api.Controllers;
+
+using System.Collections.Generic;
+using System.Linq;
+
+using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
+
+using UnitTestingDemo.Api.Data;
+using UnitTestingDemo.Api.Models;
+
+[Route("api/[controller]")]
+[ApiController]
+public class ItemsController : ControllerBase
 {
-    using System.Collections.Generic;
-    using System.Linq;
+    private readonly ItemsContext context;
 
-    using Microsoft.AspNetCore.Mvc;
-    using Microsoft.EntityFrameworkCore;
+    public ItemsController(ItemsContext context) => this.context = context;
 
-    using UnitTestingDemo.Api.Data;
-    using UnitTestingDemo.Api.Models;
+    [HttpGet]
+    public IEnumerable<Item> Get()
+        => this.context.Items
+            .Include(e => e.Tags)
+            .OrderBy(e => e.Name);
 
-    [Route("api/[controller]")]
-    [ApiController]
-    public class ItemsController : ControllerBase
+    [HttpGet]
+    public Item Get(string itemName)
+        => this.context.Items
+            .Include(e => e.Tags)
+            .FirstOrDefault(e => e.Name == itemName);
+
+    [HttpPost]
+    public ActionResult<Item> PostItem(string itemName)
     {
-        private readonly ItemsContext context;
+        var item = this.context.Add(new Item(itemName)).Entity;
+        this.context.SaveChanges();
 
-        public ItemsController(ItemsContext context) => this.context = context;
+        return item;
+    }
 
-        [HttpGet]
-        public IEnumerable<Item> Get()
-            => this.context.Items
-                .Include(e => e.Tags)
-                .OrderBy(e => e.Name);
+    [HttpPost]
+    public ActionResult<Tag> PostTag(string itemName, string tagLabel)
+    {
+        var tag = this.context
+            .Items
+            .Include(e => e.Tags)
+            .Single(e => e.Name == itemName)
+            .AddTag(tagLabel);
 
-        [HttpGet]
-        public Item Get(string itemName)
-            => this.context.Items
-                .Include(e => e.Tags)
-                .FirstOrDefault(e => e.Name == itemName);
+        this.context.SaveChanges();
 
-        [HttpPost]
-        public ActionResult<Item> PostItem(string itemName)
+        return tag;
+    }
+
+    [HttpDelete("{itemName}")]
+    public ActionResult<Item> DeleteItem(string itemName)
+    {
+        var item = this.context
+            .Items
+            .SingleOrDefault(e => e.Name == itemName);
+
+        if (item == null)
         {
-            var item = this.context.Add(new Item(itemName)).Entity;
-            this.context.SaveChanges();
-
-            return item;
+            return NotFound();
         }
 
-        [HttpPost]
-        public ActionResult<Tag> PostTag(string itemName, string tagLabel)
-        {
-            var tag = this.context
-                .Items
-                .Include(e => e.Tags)
-                .Single(e => e.Name == itemName)
-                .AddTag(tagLabel);
+        this.context.Remove(item);
+        this.context.SaveChanges();
 
-            this.context.SaveChanges();
-
-            return tag;
-        }
-
-        [HttpDelete("{itemName}")]
-        public ActionResult<Item> DeleteItem(string itemName)
-        {
-            var item = this.context
-                .Items
-                .SingleOrDefault(e => e.Name == itemName);
-
-            if (item == null)
-            {
-                return NotFound();
-            }
-
-            this.context.Remove(item);
-            this.context.SaveChanges();
-
-            return item;
-        }
+        return item;
     }
 }

@@ -1,70 +1,69 @@
-﻿namespace GameEngine.Tests
+﻿namespace GameEngine.Tests;
+
+using System;
+using Xunit;
+
+[Trait("Category", "Enemy")]
+public sealed class EnemyFactoryShould
 {
-    using System;
-    using Xunit;
+    private readonly EnemyFactory sut;
 
-    [Trait("Category", "Enemy")]
-    public sealed class EnemyFactoryShould
+    public EnemyFactoryShould() => this.sut = new EnemyFactory();
+
+    [Fact]
+    public void CreateNormalEnemyByDefault()
     {
-        private readonly EnemyFactory sut;
+        var enemy = this.sut.Create("Zombie");
 
-        public EnemyFactoryShould() => this.sut = new EnemyFactory();
+        Assert.IsType<NormalEnemy>(enemy);
+    }
 
-        [Fact]
-        public void CreateNormalEnemyByDefault()
-        {
-            var enemy = this.sut.Create("Zombie");
+    [Fact]
+    public void CreateBossEnemy()
+    {
+        var enemy = this.sut.Create("Zombie King", true);
 
-            Assert.IsType<NormalEnemy>(enemy);
-        }
+        Assert.IsType<BossEnemy>(enemy);
+    }
 
-        [Fact]
-        public void CreateBossEnemy()
-        {
-            var enemy = this.sut.Create("Zombie King", true);
+    [Fact]
+    public void CreateBossEnemy_CastReturnedTypeExample()
+    {
+        var enemy = this.sut.Create("Zombie King", true);
 
-            Assert.IsType<BossEnemy>(enemy);
-        }
+        var boss = Assert.IsType<BossEnemy>(enemy); // Assert and get cast result
+        Assert.Equal("Zombie King", boss.Name); // Additional assert on typed object
+    }
 
-        [Fact]
-        public void CreateBossEnemy_CastReturnedTypeExample()
-        {
-            var enemy = this.sut.Create("Zombie King", true);
+    [Fact]
+    public void CreateBossEnemy_AssertAssignableTypes()
+    {
+        var enemy = this.sut.Create("Zombie King", true);
 
-            var boss = Assert.IsType<BossEnemy>(enemy); // Assert and get cast result
-            Assert.Equal("Zombie King", boss.Name); // Additional assert on typed object
-        }
+        //Assert.IsType<Enemy>(enemy);
+        Assert.IsAssignableFrom<Enemy>(enemy);
+    }
 
-        [Fact]
-        public void CreateBossEnemy_AssertAssignableTypes()
-        {
-            var enemy = this.sut.Create("Zombie King", true);
-
-            //Assert.IsType<Enemy>(enemy);
-            Assert.IsAssignableFrom<Enemy>(enemy);
-        }
-
-        [Fact]
-        public void CreateSeparateInstances()
-        {
-            var enemy1 = this.sut.Create("Zombie");
-            var enemy2 = this.sut.Create("Zombie");
+    [Fact]
+    public void CreateSeparateInstances()
+    {
+        var enemy1 = this.sut.Create("Zombie");
+        var enemy2 = this.sut.Create("Zombie");
             
-            Assert.NotSame(enemy1, enemy2);
-        }
+        Assert.NotSame(enemy1, enemy2);
+    }
 
-        [Fact]
-        public void NotAllowNullName()
-        {
-            //Assert.Throws<ArgumentNullException>(() => sut.Create(null));
-            Assert.Throws<ArgumentNullException>("name", () => this.sut.Create(null));
-        }
+    [Fact]
+    public void NotAllowNullName()
+    {
+        //Assert.Throws<ArgumentNullException>(() => sut.Create(null));
+        Assert.Throws<ArgumentNullException>("name", () => this.sut.Create(null));
+    }
 
-        [Fact]
-        public void OnlyAllowKingOrQueenBossEnemies()
-        {
-            var ex = Assert.Throws<EnemyCreationException>(() => this.sut.Create("Zombie", true));
-            Assert.Equal("Zombie", ex.RequestedEnemyName);
-        }
+    [Fact]
+    public void OnlyAllowKingOrQueenBossEnemies()
+    {
+        var ex = Assert.Throws<EnemyCreationException>(() => this.sut.Create("Zombie", true));
+        Assert.Equal("Zombie", ex.RequestedEnemyName);
     }
 }

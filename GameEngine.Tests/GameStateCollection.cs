@@ -1,9 +1,8 @@
-﻿namespace GameEngine.Tests
-{
-    using Xunit;
+﻿namespace GameEngine.Tests;
 
-    [CollectionDefinition("GameState collection")]
-    public class GameStateCollection : ICollectionFixture<GameStateFixture>
-    {
-    }
+using Xunit;
+
+[CollectionDefinition("GameState collection")]
+public class GameStateCollection : ICollectionFixture<GameStateFixture>
+{
 }

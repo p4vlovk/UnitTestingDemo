@@ -1,11 +1,10 @@
-﻿namespace CreditCardApplications
+﻿namespace CreditCardApplications;
+
+public enum CreditCardApplicationDecision
 {
-    public enum CreditCardApplicationDecision
-    {
-        Unknown,
-        AutoAccepted,
-        AutoDeclined,
-        ReferredToHuman,
-        ReferredToHumanFraudRisk
-    }
+    Unknown,
+    AutoAccepted,
+    AutoDeclined,
+    ReferredToHuman,
+    ReferredToHumanFraudRisk
 }

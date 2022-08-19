@@ -1,29 +1,28 @@
-﻿namespace GameEngine
+﻿namespace GameEngine;
+
+using System;
+using System.Collections.Generic;
+using System.Threading;
+
+public class GameState
 {
-    using System;
-    using System.Collections.Generic;
-    using System.Threading;
+    public const int EarthquakeDamage = 25;
 
-    public class GameState
+    public GameState() => CreateGameWorld();
+
+    public List<PlayerCharacter> Players { get; } = new();
+
+    public Guid Id { get; } = Guid.NewGuid();
+
+    public void Earthquake()
     {
-        public const int EarthquakeDamage = 25;
-
-        public GameState() => CreateGameWorld();
-
-        public List<PlayerCharacter> Players { get; } = new();
-
-        public Guid Id { get; } = Guid.NewGuid();
-
-        public void Earthquake()
+        foreach (var player in this.Players)
         {
-            foreach (var player in this.Players)
-            {
-                player.TakeDamage(EarthquakeDamage);
-            }
+            player.TakeDamage(EarthquakeDamage);
         }
-
-        public void Reset() => this.Players.Clear();
-
-        private static void CreateGameWorld() => Thread.Sleep(2000); // Simulate expensive creation
     }
+
+    public void Reset() => this.Players.Clear();
+
+    private static void CreateGameWorld() => Thread.Sleep(2000); // Simulate expensive creation
 }

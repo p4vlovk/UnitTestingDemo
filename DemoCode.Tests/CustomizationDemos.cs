@@ -1,44 +1,43 @@
-﻿namespace DemoCode.Tests
+﻿namespace DemoCode.Tests;
+
+using System;
+using AutoFixture;
+using DemoCode.Tests.SpecimenBuilders;
+using Xunit;
+
+public class CustomizationDemos
 {
-    using System;
-    using AutoFixture;
-    using DemoCode.Tests.SpecimenBuilders;
-    using Xunit;
-
-    public class CustomizationDemos
+    [Fact]
+    public void DateTimeCustomization()
     {
-        [Fact]
-        public void DateTimeCustomization()
-        {
-            var fixture = new Fixture();
-            //fixture.Customize(new CurrentDateTimeCustomization());
-            fixture.Customizations.Add(new CurrentDateTimeGenerator());
-            var date1 = fixture.Create<DateTime>();
-            var date2 = fixture.Create<DateTime>();
+        var fixture = new Fixture();
+        //fixture.Customize(new CurrentDateTimeCustomization());
+        fixture.Customizations.Add(new CurrentDateTimeGenerator());
+        var date1 = fixture.Create<DateTime>();
+        var date2 = fixture.Create<DateTime>();
 
-            // etc.
-        }
+        // etc.
+    }
 
-        [Fact]
-        public void CustomizedPipeline()
-        {
-            var fixture = new Fixture();
-            fixture.Customizations.Add(new AirportCodeStringPropertyGenerator());
-            var flight = fixture.Create<FlightDetails>();
-            var airport = fixture.Create<Airport>();
+    [Fact]
+    public void CustomizedPipeline()
+    {
+        var fixture = new Fixture();
+        fixture.Customizations.Add(new AirportCodeStringPropertyGenerator());
+        var flight = fixture.Create<FlightDetails>();
+        var airport = fixture.Create<Airport>();
 
-            // etc.
-        }
+        // etc.
+    }
         
-        [Fact]
-        public void CustomizedPipeline2()
-        {
-            var fixture = new Fixture();
-            fixture.Customizations.Add(new AirportCodeStringPropertyGenerator2());
-            var flight = fixture.Create<FlightDetails2>();
-            var airport = fixture.Create<Airport2>();
+    [Fact]
+    public void CustomizedPipeline2()
+    {
+        var fixture = new Fixture();
+        fixture.Customizations.Add(new AirportCodeStringPropertyGenerator2());
+        var flight = fixture.Create<FlightDetails2>();
+        var airport = fixture.Create<Airport2>();
 
-            // etc.
-        }
+        // etc.
     }
 }

@@ -1,18 +1,17 @@
-﻿namespace DemoCode.Tests
+﻿namespace DemoCode.Tests;
+
+using AutoFixture;
+using Xunit;
+
+public class BookingShould
 {
-    using AutoFixture;
-    using Xunit;
-
-    public class BookingShould
+    [Fact]
+    public void CalculateTotalFlightTime()
     {
-        [Fact]
-        public void CalculateTotalFlightTime()
-        {
-            var fixture = new Fixture();
-            fixture.Inject(new AirportCode("LHR"));
-            var sut = fixture.Create<Booking>();
+        var fixture = new Fixture();
+        fixture.Inject(new AirportCode("LHR"));
+        var sut = fixture.Create<Booking>();
 
-            // etc.
-        }
+        // etc.
     }
 }

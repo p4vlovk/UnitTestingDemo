@@ -1,29 +1,28 @@
-﻿namespace CreditCardApplications
+﻿namespace CreditCardApplications;
+
+using System;
+
+public interface ILicenseData
 {
-    using System;
+    string LicenseKey { get; }
+}
 
-    public interface ILicenseData
-    {
-        string LicenseKey { get; }
-    }
+public interface IServiceInformation
+{
+    ILicenseData License { get; }
+}
 
-    public interface IServiceInformation
-    {
-        ILicenseData License { get; }
-    }
+public interface IFrequentFlyerNumberValidator
+{
+    //string LicenseKay { get; }
 
-    public interface IFrequentFlyerNumberValidator
-    {
-        //string LicenseKay { get; }
+    IServiceInformation ServiceInformation { get; }
 
-        IServiceInformation ServiceInformation { get; }
+    ValidationMode ValidationMode { get; set; }
 
-        ValidationMode ValidationMode { get; set; }
+    event EventHandler ValidatorLookupPerformed;
 
-        event EventHandler ValidatorLookupPerformed;
+    bool IsValid(string frequentFlyerNumber);
 
-        bool IsValid(string frequentFlyerNumber);
-
-        void IsValid(string frequentFlyerNumber, out bool isValid);
-    }
+    void IsValid(string frequentFlyerNumber, out bool isValid);
 }

@@ -1,9 +1,8 @@
-﻿namespace DemoCode
-{
-    public class LogMessage
-    {
-        public int Year { get; set; }
+﻿namespace DemoCode;
 
-        public string Message { get; set; }
-    }
+public class LogMessage
+{
+    public int Year { get; set; }
+
+    public string Message { get; set; }
 }

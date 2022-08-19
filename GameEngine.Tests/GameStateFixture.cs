@@ -1,16 +1,15 @@
-﻿namespace GameEngine.Tests
+﻿namespace GameEngine.Tests;
+
+using System;
+
+public class GameStateFixture : IDisposable
 {
-    using System;
+    public GameStateFixture() => this.State = new GameState();
 
-    public class GameStateFixture : IDisposable
+    public GameState State { get; }
+
+    public void Dispose()
     {
-        public GameStateFixture() => this.State = new GameState();
-
-        public GameState State { get; }
-
-        public void Dispose()
-        {
-            // Cleanup
-        }
+        // Cleanup
     }
 }

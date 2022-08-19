@@ -1,51 +1,50 @@
-﻿namespace DemoCode.Tests
+﻿namespace DemoCode.Tests;
+
+using System;
+using AutoFixture;
+using Xunit;
+
+public class SequenceDemos
 {
-    using System;
-    using AutoFixture;
-    using Xunit;
-
-    public class SequenceDemos
+    [Fact]
+    public void SequenceOfStrings()
     {
-        [Fact]
-        public void SequenceOfStrings()
-        {
-            var fixture = new Fixture();
-            var messages = fixture.CreateMany<string>(); // The sequence has 3 elements by default
+        var fixture = new Fixture();
+        var messages = fixture.CreateMany<string>(); // The sequence has 3 elements by default
 
-            // etc. 
-        }
+        // etc. 
+    }
 
-        [Fact]
-        public void ExplicitNumberOfItems()
-        {
-            var fixture = new Fixture();
-            var numbers = fixture.CreateMany<int>(6);
+    [Fact]
+    public void ExplicitNumberOfItems()
+    {
+        var fixture = new Fixture();
+        var numbers = fixture.CreateMany<int>(6);
 
-            // etc.
-        }
+        // etc.
+    }
 
-        [Fact]
-        public void AddingToExistingList()
-        {
-            var fixture = new Fixture();
-            var sut = new DebugMessageBuffer();
-            fixture.AddManyTo(sut.Messages, 10);
+    [Fact]
+    public void AddingToExistingList()
+    {
+        var fixture = new Fixture();
+        var sut = new DebugMessageBuffer();
+        fixture.AddManyTo(sut.Messages, 10);
 
-            sut.WriteMessage();
+        sut.WriteMessage();
 
-            Assert.Equal(10, sut.MessagesWritten);
-        }
+        Assert.Equal(10, sut.MessagesWritten);
+    }
 
-        [Fact]
-        public void AddingToExistingListWithCreatorFunction()
-        {
-            var fixture = new Fixture();
-            var sut = new DebugMessageBuffer();
-            // fixture.AddManyTo(sut.Messages, () => "hi");
-            var random = new Random();
-            fixture.AddManyTo(sut.Messages, () => random.Next().ToString());
+    [Fact]
+    public void AddingToExistingListWithCreatorFunction()
+    {
+        var fixture = new Fixture();
+        var sut = new DebugMessageBuffer();
+        // fixture.AddManyTo(sut.Messages, () => "hi");
+        var random = new Random();
+        fixture.AddManyTo(sut.Messages, () => random.Next().ToString());
             
-            // etc.
-        }
+        // etc.
     }
 }

@@ -1,22 +1,21 @@
-﻿namespace GameEngine.Tests
+﻿namespace GameEngine.Tests;
+
+using Xunit;
+using Xunit.Abstractions;
+
+public class BossEnemyShould
 {
-    using Xunit;
-    using Xunit.Abstractions;
+    private readonly ITestOutputHelper output;
 
-    public class BossEnemyShould
+    public BossEnemyShould(ITestOutputHelper output) => this.output = output;
+
+    [Fact]
+    [Trait("Category", "Enemy")]
+    public void HaveCorrectPower()
     {
-        private readonly ITestOutputHelper output;
-
-        public BossEnemyShould(ITestOutputHelper output) => this.output = output;
-
-        [Fact]
-        [Trait("Category", "Enemy")]
-        public void HaveCorrectPower()
-        {
-            this.output.WriteLine("Creating Boss Enemy");
-            var sut = new BossEnemy();
+        this.output.WriteLine("Creating Boss Enemy");
+        var sut = new BossEnemy();
             
-            Assert.Equal(166.667, sut.SpecialAttackPower, 3);
-        }
+        Assert.Equal(166.667, sut.SpecialAttackPower, 3);
     }
 }

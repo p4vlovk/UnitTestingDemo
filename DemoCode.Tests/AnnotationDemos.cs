@@ -1,19 +1,18 @@
-﻿namespace DemoCode.Tests
+﻿namespace DemoCode.Tests;
+
+using AutoFixture;
+using Xunit;
+
+public class AnnotationDemos
 {
-    using AutoFixture;
-    using Xunit;
-
-    public class AnnotationDemos
+    [Fact]
+    public void BasicStrings()
     {
-        [Fact]
-        public void BasicStrings()
-        {
-            // Arrange
-            var fixture = new Fixture();
-            var player = fixture.Create<PlayerCharacter>();
+        // Arrange
+        var fixture = new Fixture();
+        var player = fixture.Create<PlayerCharacter>();
 
-            // Act
-            // Assert
-        }
+        // Act
+        // Assert
     }
 }

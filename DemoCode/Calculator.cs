@@ -1,9 +1,8 @@
-﻿namespace DemoCode
-{
-    public class Calculator
-    {
-        public int Value { get; private set; }
+﻿namespace DemoCode;
 
-        public void Add(int number) => this.Value += number;
-    }
+public class Calculator
+{
+    public int Value { get; private set; }
+
+    public void Add(int number) => this.Value += number;
 }

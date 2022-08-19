@@ -1,7 +1,6 @@
-﻿namespace DemoCode
+﻿namespace DemoCode;
+
+public interface IEmailGateway
 {
-    public interface IEmailGateway
-    {
-        void Send(EmailMessage email);
-    }
+    void Send(EmailMessage email);
 }

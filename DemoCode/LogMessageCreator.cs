@@ -1,13 +1,12 @@
-﻿namespace DemoCode
-{
-    using System;
+﻿namespace DemoCode;
 
-    public static class LogMessageCreator
+using System;
+
+public static class LogMessageCreator
+{
+    public static LogMessage Create(string message, DateTime when) => new LogMessage
     {
-        public static LogMessage Create(string message, DateTime when) => new LogMessage
-        {
-            Year = when.Year,
-            Message = message
-        };
-    }
+        Year = when.Year,
+        Message = message
+    };
 }

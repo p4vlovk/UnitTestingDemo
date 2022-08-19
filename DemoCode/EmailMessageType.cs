@@ -1,10 +1,9 @@
-﻿namespace DemoCode
+﻿namespace DemoCode;
+
+public enum EmailMessageType
 {
-    public enum EmailMessageType
-    {
-        Unspecified,
-        Sales,
-        Support,
-        AccountManagement
-    }
+    Unspecified,
+    Sales,
+    Support,
+    AccountManagement
 }
