@@ -8,24 +8,25 @@ public abstract class ValueObject
     protected abstract IEnumerable<object> GetEqualityComponents();
 
     public override bool Equals(object obj)
-        => obj is not null
-           && this.GetType() == obj.GetType()
-           && this.GetEqualityComponents()
-               .SequenceEqual(((ValueObject)obj).GetEqualityComponents());
+        => ReferenceEquals(this, obj) ||
+           (obj is ValueObject other &&
+            this.GetType() == other.GetType() &&
+            this.GetEqualityComponents().SequenceEqual(other.GetEqualityComponents()));
 
     public override int GetHashCode()
         => this.GetEqualityComponents()
-            .Aggregate(1, (current, obj) =>
+            .Where(value => value is not null)
+            .Aggregate(17, (current, value) =>
             {
                 unchecked
                 {
-                    return current * 23 + (obj?.GetHashCode() ?? 0);
+                    return current * 59 + value.GetHashCode();
                 }
             });
 
-    public static bool operator ==(ValueObject objA, ValueObject objB)
-        => objA?.Equals(objB) ?? objB is null;
+    public static bool operator ==(ValueObject left, ValueObject right)
+        => left?.Equals(right) ?? right is null;
 
-    public static bool operator !=(ValueObject objA, ValueObject objB)
-        => !(objA == objB);
+    public static bool operator !=(ValueObject left, ValueObject right)
+        => !(left == right);
 }
