@@ -7,14 +7,17 @@ using Xunit;
 
 public class CustomizationDemos
 {
+    private readonly Fixture fixture;
+
+    public CustomizationDemos() => this.fixture = new Fixture();
+    
     [Fact]
     public void DateTimeCustomization()
     {
-        var fixture = new Fixture();
         //fixture.Customize(new CurrentDateTimeCustomization());
-        fixture.Customizations.Add(new CurrentDateTimeGenerator());
-        var date1 = fixture.Create<DateTime>();
-        var date2 = fixture.Create<DateTime>();
+        this.fixture.Customizations.Add(new CurrentDateTimeGenerator());
+        var date1 = this.fixture.Create<DateTime>();
+        var date2 = this.fixture.Create<DateTime>();
 
         // etc.
     }
@@ -22,10 +25,9 @@ public class CustomizationDemos
     [Fact]
     public void CustomizedPipeline()
     {
-        var fixture = new Fixture();
-        fixture.Customizations.Add(new AirportCodeStringPropertyGenerator());
-        var flight = fixture.Create<FlightDetails>();
-        var airport = fixture.Create<Airport>();
+        this.fixture.Customizations.Add(new AirportCodeStringGenerator());
+        var flight = this.fixture.Create<FlightDetails>();
+        var airport = this.fixture.Create<Airport>();
 
         // etc.
     }
@@ -33,10 +35,9 @@ public class CustomizationDemos
     [Fact]
     public void CustomizedPipeline2()
     {
-        var fixture = new Fixture();
-        fixture.Customizations.Add(new AirportCodeStringPropertyGenerator2());
-        var flight = fixture.Create<FlightDetails2>();
-        var airport = fixture.Create<Airport2>();
+        this.fixture.Customizations.Add(new AirportCodeGenerator());
+        var flight = this.fixture.Create<FlightDetails2>();
+        var airport = this.fixture.Create<Airport2>();
 
         // etc.
     }

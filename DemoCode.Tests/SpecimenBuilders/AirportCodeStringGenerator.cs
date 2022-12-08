@@ -7,7 +7,7 @@ using AutoFixture.Kernel;
 /* As an alternative, we can create a custom AirportCode class to represent an airport code.
     We can then use this class here to check the type of the property rather than having to
     use reflection to check the property name. */
-public class AirportCodeStringPropertyGenerator : ISpecimenBuilder
+public class AirportCodeStringGenerator : ISpecimenBuilder
 {
     public object Create(object request, ISpecimenContext context)
     {
@@ -34,18 +34,19 @@ public class AirportCodeStringPropertyGenerator : ISpecimenBuilder
         => DateTime.Now.Ticks % 2 == 0 ? "LHR" : "PER";
 }
 
-public class AirportCodeStringPropertyGenerator2 : ISpecimenBuilder
+public class AirportCodeGenerator : ISpecimenBuilder
 {
-    public object Create(object request, ISpecimenContext context) => request switch
-    {
-        ParameterInfo parameterInfo => parameterInfo.ParameterType == typeof(AirportCode)
-            ? RandomAirportCode()
-            : new NoSpecimen(),
-        PropertyInfo propertyInfo => propertyInfo.PropertyType == typeof(AirportCode)
-            ? RandomAirportCode()
-            : new NoSpecimen(),
-        _ => new NoSpecimen()
-    };
+    public object Create(object request, ISpecimenContext context)
+        => request switch
+        {
+            ParameterInfo parameterInfo => parameterInfo.ParameterType == typeof(AirportCode)
+                ? RandomAirportCode()
+                : new NoSpecimen(),
+            PropertyInfo propertyInfo => propertyInfo.PropertyType == typeof(AirportCode)
+                ? RandomAirportCode()
+                : new NoSpecimen(),
+            _ => new NoSpecimen()
+        };
 
     private static AirportCode RandomAirportCode()
         => DateTime.Now.Ticks % 2 == 0 ? (AirportCode)"LHR" : (AirportCode)"PER";

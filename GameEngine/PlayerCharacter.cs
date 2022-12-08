@@ -8,10 +8,12 @@ using GameEngine.Annotations;
 
 public sealed class PlayerCharacter : INotifyPropertyChanged
 {
+    public const int DefaultHealth = 100;
+    
     private readonly string firstName;
     private readonly string lastName;
         
-    private int health = 100;
+    private int health = DefaultHealth;
 
     public PlayerCharacter(string firstName, string lastName, string nickname = null)
     {

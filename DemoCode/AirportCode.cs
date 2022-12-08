@@ -35,8 +35,8 @@ public sealed class AirportCode : ValueObject
 
     private static bool IsValid(string airportCode)
     {
-        var isCorrectLength = airportCode.Length == 3;
-        var isUpperCase = airportCode == airportCode.ToUpperInvariant();
+        bool isCorrectLength = airportCode.Length == 3;
+        bool isUpperCase = airportCode == airportCode.ToUpperInvariant();
 
         return isCorrectLength && isUpperCase;
     }

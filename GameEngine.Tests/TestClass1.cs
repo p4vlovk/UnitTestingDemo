@@ -4,7 +4,7 @@ using Xunit;
 using Xunit.Abstractions;
 
 [Collection("GameState collection")]
-public class TestClass1 : IClassFixture<GameStateFixture>
+public class TestClass1
 {
     private readonly GameStateFixture gameStateFixture;
     private readonly ITestOutputHelper output;

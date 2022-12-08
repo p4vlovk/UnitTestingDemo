@@ -29,27 +29,27 @@ public class PlayerCharacterShould : IDisposable
     #region Assert against string values
     [Fact]
     public void CalculateFullName() => Assert.Equal("Sarah Smith", this.sut.FullName);
-
-    [Fact]
-    public void HaveFullNameStartingWithFirstName() => Assert.StartsWith("Sarah", this.sut.FullName);
-
-    [Fact]
-    public void HaveFullNameEndingWithLastName() => Assert.EndsWith("Smith", this.sut.FullName);
-
+    
     [Fact]
     public void CalculateFullName_IgnoreCaseAssertExample() => Assert.Equal("Sarah Smith", new PlayerCharacter("SARAH", "SMITH").FullName, ignoreCase: true);
-
+    
     // [Fact(Skip = "Don't need to run this")]
     [Fact]
     public void CalculateFullName_SubstringAssertExample() => Assert.Contains("ah Sm", this.sut.FullName);
 
     [Fact]
     public void CalculateFullNameWithTitleCase() => Assert.Matches("[A-Z]{1}[a-z]+ [A-Z]{1}[a-z]+", this.sut.FullName);
+
+    [Fact]
+    public void HaveFullNameStartingWithFirstName() => Assert.StartsWith("Sarah", this.sut.FullName);
+
+    [Fact]
+    public void HaveFullNameEndingWithLastName() => Assert.EndsWith("Smith", this.sut.FullName);
     #endregion
 
     #region Assert against numeric values
     [Fact]
-    public void StartWithDefaultHealth() => Assert.Equal(100, this.sut.Health);
+    public void StartWithDefaultHealth() => Assert.Equal(PlayerCharacter.DefaultHealth, this.sut.Health);
 
     [Fact]
     public void StartWithDefaultHealth_NotEqualExample() => Assert.NotEqual(0, this.sut.Health);

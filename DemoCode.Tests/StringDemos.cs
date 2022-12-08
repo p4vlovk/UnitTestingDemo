@@ -8,13 +8,15 @@ public class StringDemos
     [Fact]
     public void BasicStrings()
     {
-        var sut = new NameJoiner();
+        // Arrange
         var fixture = new Fixture();
         var firstName = fixture.Create("First_"); // AutoFixture.SeedExtensions NuGet package
         var lastName = fixture.Create("Last_");
 
-        var result = sut.Join(firstName, lastName);
+        // Act
+        var result = NameJoiner.Join(firstName, lastName);
 
+        // Assert
         Assert.Equal($"{firstName} {lastName}", result);
     }
 }

@@ -8,10 +8,7 @@ public class EmailMessageBuffer
 {
     private readonly List<EmailMessage> emails = new();
 
-    public EmailMessageBuffer(IEmailGateway emailGateway)
-    {
-        this.EmailGateway = emailGateway;
-    }
+    public EmailMessageBuffer(IEmailGateway emailGateway) => this.EmailGateway = emailGateway;
 
     public IEmailGateway EmailGateway { get; }
 

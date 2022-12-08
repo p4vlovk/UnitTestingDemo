@@ -6,19 +6,19 @@ using Xunit;
 
 public class CustomizeFixtureDemos
 {
+    private readonly Fixture fixture = new();
+    
     [Fact]
     public void Error()
     {
-        var fixture = new Fixture();
-        fixture.Inject("LHR");
-        var flight = fixture.Create<FlightDetails>();
+        this.fixture.Inject("LHR");
+        var flight = this.fixture.Create<FlightDetails>();
     }
 
     [Fact]
     public void SettingValueForCustomType()
     {
-        var fixture = new Fixture();
-        fixture.Inject(new FlightDetails
+        this.fixture.Inject(new FlightDetails
         {
             DepartureAirportCode = "PER",
             ArrivalAirportCode = "LHR",
@@ -26,30 +26,28 @@ public class CustomizeFixtureDemos
             AirlineName = "Awesome Aero"
         });
 
-        var flight1 = fixture.Create<FlightDetails>();
-        var flight2 = fixture.Create<FlightDetails>();
+        var flight1 = this.fixture.Create<FlightDetails>();
+        var flight2 = this.fixture.Create<FlightDetails>();
     }
 
     [Fact]
     public void CustomCreationFunction()
     {
-        var fixture = new Fixture();
-        fixture.Register(() => DateTime.Now.Ticks.ToString());
-        var string1 = fixture.Create<string>();
-        var string2 = fixture.Create<string>();
+        this.fixture.Register(() => DateTime.Now.Ticks.ToString());
+        var string1 = this.fixture.Create<string>();
+        var string2 = this.fixture.Create<string>();
     }
 
     [Fact]
     public void FreezingValues()
     {
-        var fixture = new Fixture();
         //var id = fixture.Create<int>();
         //fixture.Inject(id);
         //var customerName = fixture.Create<string>();
         //fixture.Inject(customerName);
-        var id = fixture.Freeze<int>();
-        var customerName = fixture.Freeze<string>();
-        var sut = fixture.Create<Order>();
+        var id = this.fixture.Freeze<int>();
+        var customerName = this.fixture.Freeze<string>();
+        var sut = this.fixture.Create<Order>();
 
         Assert.Equal($"{id}-{customerName}", sut.ToString());
     }
@@ -59,8 +57,7 @@ public class CustomizeFixtureDemos
     [Fact]
     public void OmitSettingSpecificProperties()
     {
-        var fixture = new Fixture();
-        var flight = fixture.Build<FlightDetails>()
+        var flight = this.fixture.Build<FlightDetails>()
             .Without(x => x.ArrivalAirportCode)
             .Without(x => x.DepartureAirportCode)
             .Create();
@@ -69,8 +66,7 @@ public class CustomizeFixtureDemos
     [Fact]
     public void OmitSettingAllProperties()
     {
-        var fixture = new Fixture();
-        var flight = fixture.Build<FlightDetails>()
+        var flight = this.fixture.Build<FlightDetails>()
             .OmitAutoProperties()
             .Create();
     }
@@ -78,8 +74,7 @@ public class CustomizeFixtureDemos
     [Fact]
     public void CustomizedBuilding()
     {
-        var fixture = new Fixture();
-        var flight = fixture.Build<FlightDetails>()
+        var flight = this.fixture.Build<FlightDetails>()
             .With(x => x.ArrivalAirportCode, "LAX")
             .With(x => x.DepartureAirportCode, "LHR")
             .Create();
@@ -88,8 +83,7 @@ public class CustomizeFixtureDemos
     [Fact]
     public void CustomizedBuildingWithActions()
     {
-        var fixture = new Fixture();
-        var flight = fixture.Build<FlightDetails>()
+        var flight = this.fixture.Build<FlightDetails>()
             .With(x => x.ArrivalAirportCode, "LAX")
             .With(x => x.DepartureAirportCode, "LHR")
             .Without(x => x.MealOptions)
@@ -102,8 +96,7 @@ public class CustomizeFixtureDemos
     [Fact]
     public void CustomizedBuildingForATypeInFixture()
     {
-        var fixture = new Fixture();
-        fixture.Customize<FlightDetails>(fd =>
+        this.fixture.Customize<FlightDetails>(fd =>
             fd.With(x => x.DepartureAirportCode, "LHR")
                 .With(x => x.ArrivalAirportCode, "LAX")
                 .With(x => x.AirlineName, "Fly Fly Premium Air")
@@ -111,7 +104,7 @@ public class CustomizeFixtureDemos
                 .Do(x => x.MealOptions.Add("Chicken"))
                 .Do(x => x.MealOptions.Add("Fish"))); // no .Create() is required here
 
-        var flight1 = fixture.Create<FlightDetails>();
-        var flight2 = fixture.Create<FlightDetails>();
+        var flight1 = this.fixture.Create<FlightDetails>();
+        var flight2 = this.fixture.Create<FlightDetails>();
     }
 }

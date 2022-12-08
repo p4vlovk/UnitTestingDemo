@@ -71,7 +71,11 @@ public class CreditCardApplicationEvaluatorShould
     {
         // Arrange
         this.mockValidator.Setup(x => x.IsValid(It.IsAny<string>())).Returns(false);
-        var application = new CreditCardApplication();
+        var application = new CreditCardApplication
+        {
+            Age = 21,
+            GrossAnnualIncome = 19_999
+        };
     
         // Act
         var decision = this.sut.Evaluate(application);
@@ -345,7 +349,11 @@ public class CreditCardApplicationEvaluatorShould
 //         mockValidator.Setup(x => x.ServiceInformation.License.LicenseKey).Returns("OK");
 //
 //         var sut = new CreditCardApplicationEvaluator(mockValidator.Object);
-//         var application = new CreditCardApplication();
+//         var application = new CreditCardApplication
+//         {
+//             Age = 21,
+//             GrossAnnualIncome = 19_999
+//         };
 //
 //         // Act
 //         var decision = sut.Evaluate(application);

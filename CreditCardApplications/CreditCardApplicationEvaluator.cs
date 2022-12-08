@@ -59,12 +59,9 @@ public class CreditCardApplicationEvaluator
             return CreditCardApplicationDecision.ReferredToHuman;
         }
 
-        if (application.GrossAnnualIncome < LowIncomeThreshold)
-        {
-            return CreditCardApplicationDecision.AutoDeclined;
-        }
-
-        return CreditCardApplicationDecision.ReferredToHuman;
+        return application.GrossAnnualIncome < LowIncomeThreshold
+            ? CreditCardApplicationDecision.AutoDeclined
+            : CreditCardApplicationDecision.ReferredToHuman;
     }
 
     private void ValidatorLookupPerformed(object sender, EventArgs e) => this.ValidatorLookupCount++;
