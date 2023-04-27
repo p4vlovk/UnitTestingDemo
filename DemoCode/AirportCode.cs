@@ -10,14 +10,10 @@ public sealed class AirportCode : ValueObject
     public AirportCode(string value)
     {
         if (value is null)
-        {
             throw new ArgumentNullException(nameof(value));
-        }
 
         if (!IsValid(value))
-        {
             throw new FormatException($"Airport code {nameof(value)} is not in the correct format. Airport codes should be three uppercase letters.");
-        }
 
         this.value = value;
     }

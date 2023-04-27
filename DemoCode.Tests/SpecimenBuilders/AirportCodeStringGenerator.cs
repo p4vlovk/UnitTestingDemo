@@ -13,19 +13,15 @@ public class AirportCodeStringGenerator : ISpecimenBuilder
     {
         // See if we are trying to create a value for a property
         if (request is not PropertyInfo propertyInfo)
-        {
             // This specimen does not apply to current request
             return new NoSpecimen(); // null is a valid specimen so return NoSpecimen
-        }
 
         // Now we know we are dealing with a property
         // Are we creating a value for an airport code?
         var isAirportCodeProperty = propertyInfo.Name.Contains("AirportCode");
         var isStringProperty = propertyInfo.PropertyType == typeof(string);
         if (isAirportCodeProperty && isStringProperty)
-        {
             return RandomAirportCode();
-        }
 
         return new NoSpecimen();
     }

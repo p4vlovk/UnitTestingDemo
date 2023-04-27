@@ -4,7 +4,8 @@ using System;
 
 public class GameStateFixture : IDisposable
 {
-    public GameStateFixture() => this.State = new GameState();
+    public GameStateFixture()
+        => this.State = new GameState();
 
     public GameState State { get; }
 
