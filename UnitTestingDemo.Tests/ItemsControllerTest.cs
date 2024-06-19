@@ -49,10 +49,11 @@ public abstract class ItemsControllerTest
         using (var context = new ItemsContext(this.ContextOptions))
         {
             var item = context.Items
+                .Include(item => item.Tags)
                 .Single(e => e.Name == "ItemFour");
 
             Assert.Equal("ItemFour", item.Name);
-            Assert.Equal(0, item.Tags.Count);
+            Assert.Empty(item.Tags);
         }
     }
 
@@ -75,7 +76,7 @@ public abstract class ItemsControllerTest
                 .Include(e => e.Tags)
                 .Single(e => e.Name == "ItemTwo");
 
-            Assert.Equal(1, item.Tags.Count);
+            Assert.Single(item.Tags);
             Assert.Equal("Tag21", item.Tags[0].Label);
             Assert.Equal(1, item.Tags[0].Count);
         }
@@ -123,9 +124,10 @@ public abstract class ItemsControllerTest
         using (var context = new ItemsContext(this.ContextOptions))
         {
             var item = context.Items
+                .Include(item => item.Tags)
                 .Single(e => e.Name == "itemtwo");
 
-            Assert.Equal(0, item.Tags.Count);
+            Assert.Empty(item.Tags);
         }
     }
 

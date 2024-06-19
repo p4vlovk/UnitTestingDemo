@@ -6,7 +6,7 @@ using System.Linq;
 public class Item
 {
     private readonly int id;
-    private readonly List<Tag> tags = new List<Tag>();
+    private readonly List<Tag> tags = [];
 
     private Item(int id, string name)
     {
