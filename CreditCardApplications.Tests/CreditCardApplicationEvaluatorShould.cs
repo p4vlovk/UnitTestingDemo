@@ -20,6 +20,10 @@ public class CreditCardApplicationEvaluatorShould
         this.mockValidator.Setup(x => x.IsValid(It.IsAny<string>())).Returns(true);
         this.sut = new CreditCardApplicationEvaluator(this.mockValidator.Object);
     }
+
+    [Fact]
+    public void Throw_WhenValidatorIsNull()
+        => Assert.Throws<ArgumentNullException>("validator", () => this.sut = new CreditCardApplicationEvaluator(null));
     
     [Fact]
     public void AcceptHighIncomeApplications()
@@ -64,6 +68,24 @@ public class CreditCardApplicationEvaluatorShould
     
         // Assert
         Assert.Equal(CreditCardApplicationDecision.AutoDeclined, decision);
+    }
+
+    [Fact]
+    public void ReferNormalIncomeValidFrequentFlyerApplications()
+    {
+        // Arrange
+        var application = new CreditCardApplication
+        {
+            Age = 21,
+            GrossAnnualIncome = 20_000,
+            FrequentFlyerNumber = "y"
+        };
+        
+        // Act
+        var decision = this.sut.Evaluate(application);
+    
+        // Assert
+        Assert.Equal(CreditCardApplicationDecision.ReferredToHuman, decision);
     }
     
     [Fact]
